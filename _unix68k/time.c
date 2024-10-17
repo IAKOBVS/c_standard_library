@@ -4,7 +4,7 @@
 		/* UNIX system call */
 time_t time(time_t *);
 
-time_t (time)(time_t *tod)
+time_t time(time_t *tod)
 	{	/* return calendar time */
 	time_t t = time(NULL) + (70*365LU+17)*86400;
 

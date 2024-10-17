@@ -2,7 +2,7 @@
 #include <string.h>
 #include "../_headers/xstdio.h"
 
-size_t (fread)(void *ptr, size_t size, size_t nelem, FILE *str)
+size_t fread(void *ptr, size_t size, size_t nelem, FILE *str)
 	{	/* read into array from stream */
 	size_t ns = size * nelem;
 	unsigned char *s = (unsigned char *)ptr;
