@@ -1,0 +1,19 @@
+#!/bin/sh
+# Decapitalize directories
+for dir in $(find . -type d | grep -v 'git' | grep -v '^\.$'); do
+	mv "$dir" "$(echo $dir | tr 'A-Z' 'a-z')" 
+done
+# Decapitalize filenames
+for filenames in $(find . -type f -name '*.C' -o -name '*.H'); do
+	mv "$filenames" "$(echo $filenames | tr 'A-Z' 'a-z')" 
+done
+# Correct functions
+sed -i 's/^\([A-Za-z0-9]* \**\)(\([A-Za-z0-9]*\))\((\)/\1\2\3/' $(find '.' -type f -name '*.c' -o -name '*.h')
+sed -i 's/(\(is[A-Za-z0-9]*\))(/\1(/' $(find . -type f -name '*.c'
+# Correct headers
+sed -i 's/#include "x/#include "..\/_headers\/x/' $(find . -type f -name '*.c' -o -name '*.h')
+sed -i 's/#include <yvals\.h>/#include "..\/_headers\/yvals.h"/' $(find . -type f -name '*.c' -o -name '*.h')
+sed -i 's/#include "yfuns\.h"/#include "..\/_headers\/yfuns.h"/' $(find . -type f -name '*.c' -o -name '*.h')
+sed -i 's/#include "yfuns\.h"/#include "..\/_headers\/yfuns.h"/' $(find . -type f -name '*.c' -o -name '*.h')
+# Undefine NAN
+sed -i 's/\(#define NAN.*\)/#ifndef NAN\n\1\n#endif/' '_headers/xmath.h'
